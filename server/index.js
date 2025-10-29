@@ -39,5 +39,5 @@ app.use(express.json());
 
 // Simple health check route
 app.get('/health', (_req, res) => res.json({ ok: true }));
-
-app.listen(PORT, () => console.log(`Server running on  http://localhost:${PORT}`));
+app.use('/signed', express.static(SIGNED_DIR, { maxAge: 0 }));
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from './index';
 
 describe('ThemeToggle Component', () => {
   test('renders ThemeToggle button', () => {

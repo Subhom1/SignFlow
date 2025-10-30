@@ -1,9 +1,9 @@
 import './App.css';
-
+import Layout from './components/layout';
 function App() {
   return (
     <>
-      <div className="font-bold text-2xl text-gray-900 dark:text-gray-100">SignFlow</div>
+      <Layout />
     </>
   );
 }

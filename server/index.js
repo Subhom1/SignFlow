@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import os from 'os';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,9 +15,13 @@ const SIGNED_DIR = path.join(__dirname, 'tmp', 'signed');
 
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 fs.mkdirSync(SIGNED_DIR, { recursive: true });
+const PORT = process.env.PORT || 5050;
+const HOST = '0.0.0.0'; // Listen on all network interfaces
+const app = express();
+app.use(cors({ origin: true }));
+app.use(express.json());
 
-// --- Configure Multer upload middleware -------------------------------------
-// Handles multipart/form-data and restricts to PDF files.
+// Configure Multer upload middleware
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => cb(null, UPLOAD_DIR),
   filename: (_req, file, cb) => cb(null, file.originalname),
@@ -33,15 +38,21 @@ const upload = multer({
   },
 });
 
-const PORT = process.env.PORT || 5000;
-const app = express();
-app.use(cors({ origin: true }));
-app.use(express.json());
-
 // Simple health check route
-app.get('/health', (_req, res) => res.json({ ok: true }));
+app.get('/health', (_req, res) => {
+  res.json({ ok: true, timestamp: new Date().toISOString() });
+});
+// PDF signing route
 app.post('/sign', upload.single('file'), async (req, res, next) => {
   try {
+    console.log('Received sign request');
+    console.log('File:', req.file);
+    console.log('Body:', req.body);
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
     const signerName = req.body.name || 'Anonymous';
     const originalFile = req.file?.originalname || 'dummy.pdf';
     const timestamp = new Date().toLocaleString('en-GB', {
@@ -68,7 +79,7 @@ app.post('/sign', upload.single('file'), async (req, res, next) => {
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
     // Create watermark text
-    const watermark = `${signerName}  ${timestamp}`;
+    const watermark = `${signerName} • ${timestamp}`;
 
     // Draw watermark on every page
     const pages = pdfDoc.getPages();
@@ -88,6 +99,8 @@ app.post('/sign', upload.single('file'), async (req, res, next) => {
     const signedPdfBytes = await pdfDoc.save();
     await fs.promises.writeFile(signedPath, signedPdfBytes);
 
+    console.log('PDF signed successfully:', signedFileName);
+
     // Respond with signed file details
     res.json({
       fileName: signedFileName,
@@ -98,8 +111,44 @@ app.post('/sign', upload.single('file'), async (req, res, next) => {
       message: `Signed PDF created for ${signerName}`,
     });
   } catch (err) {
-    next(err);
+    console.error('Error signing PDF:', err);
+    res.status(500).json({ error: 'Failed to sign PDF' });
   }
 });
+
+// Serve signed PDFs
 app.use('/signed', express.static(SIGNED_DIR, { maxAge: 0 }));
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).json({ error: err.message || 'Internal server error' });
+});
+
+// Helper function to get local IP addresses
+function getLocalIpAddresses() {
+  const interfaces = os.networkInterfaces();
+  const addresses = [];
+
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      // Skip internal and non-IPv4 addresses
+      if (iface.family === 'IPv4' && !iface.internal) {
+        addresses.push(iface.address);
+      }
+    }
+  }
+
+  return addresses;
+}
+
+app.listen(PORT, HOST, () => {
+  console.log(`\n Server running on:`);
+  console.log(`   Local:   http://localhost:${PORT}`);
+
+  const localIps = getLocalIpAddresses();
+  localIps.forEach((ip) => {
+    console.log(`Network: http://${ip}:${PORT}`);
+  });
+  console.log('');
+});

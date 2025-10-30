@@ -5,8 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#0070AD',
-        accent: '#17ABDA',
+        primary: '#ca7f47',
+        primaryAccent: '#feedd9',
+        primaryDark: '#1f2937',
+        primaryDarkAccent: '#a9c4e6',
+        btnLight: '#cc844d',
+        btnDark: '#3a4e6a',
       },
     },
   },

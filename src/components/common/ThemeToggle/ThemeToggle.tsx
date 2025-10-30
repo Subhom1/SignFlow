@@ -18,27 +18,30 @@ export const ThemeToggle = () => {
   }, [theme]);
 
   return (
-    <button
-      type="button"
-      aria-pressed={theme === 'dark'}
-      aria-label="Toggle theme"
-      onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
-    >
-      <div
-        className={`${theme === 'dark' ? 'w-[103px]' : 'w-[85px]'} h-7 rounded-full transition-colors duration-200
-                   bg-gray-300 dark:bg-gray-500 p-[3px] flex items-center`}
+    <>
+      <button
+        type="button"
+        aria-pressed={theme === 'dark'}
+        aria-label="Toggle theme"
+        onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+        className="flex items-center focus:outline-none"
       >
         <div
-          className={`bg-white w-5 h-5 rounded-full shadow transform transition-transform duration-200
-                      ${theme === 'dark' ? 'translate-x-[75px]' : 'translate-x-0'}`}
-        />
-        <span
-          className={`text-sm font-medium text-gray-800 dark:text-gray-200 select-none text-center ${theme === 'dark' ? 'mr-1' : 'ml-1'}`}
+          className={`w-[51px] h-7 rounded-full transition-colors duration-200
+                   bg-gray-300 dark:bg-gray-500 p-[3px] flex items-center`}
         >
-          {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
-        </span>
-      </div>
-    </button>
+          <div
+            className={`bg-white w-5 h-5 rounded-full shadow transform transition-transform duration-200
+                      ${theme === 'dark' ? 'translate-x-6' : 'translate-x-0'}`}
+          />
+        </div>
+      </button>
+      <span
+        className={`ml-2 text-sm font-medium text-gray-800 dark:text-gray-200 select-none text-center ${theme === 'dark' ? 'mr-1' : 'ml-1'}`}
+      >
+        {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+      </span>
+    </>
   );
 };
 

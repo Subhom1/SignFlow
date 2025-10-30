@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import MainContent from './index';
+import { RecoilRoot } from 'recoil';
 
 describe('MainContent Component', () => {
   test('render the main upload page icon, title, subtitle', () => {
-    render(<MainContent />);
+    render(
+      <RecoilRoot>
+        <MainContent />
+      </RecoilRoot>
+    );
     const iconElement = screen.getByTestId('upload-icon');
     const titleElement = screen.getByTestId('upload-title');
     const subtitleElement = screen.getByTestId('upload-subtitle');
@@ -12,7 +17,11 @@ describe('MainContent Component', () => {
     expect(subtitleElement).toBeInTheDocument();
   });
   test('render TextField, FileUpload and Button components', () => {
-    render(<MainContent />);
+    render(
+      <RecoilRoot>
+        <MainContent />
+      </RecoilRoot>
+    );
     const textFieldElement = screen.getByTestId('name-input');
     const fileUploadElement = screen.getByTestId('file-input');
     const buttonElement = screen.getByTestId('sign-btn');

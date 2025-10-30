@@ -5,13 +5,7 @@ import autoprefixer from 'autoprefixer';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [
-    react({
-      babel: {
-        plugins: [['babel-plugin-react-compiler']],
-      },
-    }),
-  ],
+  plugins: [react()],
   css: {
     postcss: {
       plugins: [tailwindcss(), autoprefixer()],
@@ -20,6 +14,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@types': path.resolve(__dirname, './types'),
     },
   },
 });

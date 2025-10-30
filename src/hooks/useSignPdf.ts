@@ -62,7 +62,7 @@ export const useSignPdf = (): UseSignPdfReturn => {
       setTimeout(() => {
         setSignedPdfUrl(`${baseUrl}${response.url}`);
         setIsLoading(false);
-      }, 500);
+      }, 1000);
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : 'Failed to sign PDF. Please try again.';

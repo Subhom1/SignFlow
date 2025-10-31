@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { SignPdfResponse } from '@types/api';
+import type { SignPdfResponse } from '../types/api';
 
 const API_BASE_URL = process.env.VITE_API_URL;
 

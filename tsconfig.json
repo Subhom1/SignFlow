@@ -1,19 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "es2022",
+    "module": "es2022",
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "baseUrl": "src",
+
+    // Set baseUrl to project root so we can alias both src and types cleanly
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
+      "@/*": ["src/*"],
       "@types/*": ["types/*"]
     },
-    "types": ["jest", "@testing-library/jest-dom"]
+
+    "types": ["jest", "@testing-library/jest-dom", "node"]
   },
-  "include": ["src", "jest.setup.ts", "vite-env.d.ts"]
+  "include": ["src", "types", "jest.setup.ts", "vite-env.d.ts"]
 }

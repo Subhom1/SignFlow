@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { SignPdfResponse } from '@types/api';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+const API_BASE_URL = process.env.VITE_API_URL;
 
 export const signPdf = async (file: File, name: string): Promise<SignPdfResponse> => {
   const formData = new FormData();

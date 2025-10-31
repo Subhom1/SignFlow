@@ -144,7 +144,7 @@ function getLocalIpAddresses() {
 
 app.listen(PORT, HOST, () => {
   console.log(`\n Server running on:`);
-  console.log(`   Local:   http://localhost:${PORT}`);
+  console.log(`Local:http://localhost:${PORT}`);
 
   const localIps = getLocalIpAddresses();
   localIps.forEach((ip) => {

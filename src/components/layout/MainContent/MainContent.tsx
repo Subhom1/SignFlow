@@ -1,4 +1,4 @@
-import FileUpload from '@/components/upload/FileUpload';
+import FileUpload from '@/components/common/FileUpload';
 import Button from '@/components/common/Button';
 import TextField from '@/components/common/TextField';
 import ProgressIndicator from '@/components/common/ProgressIndicator';

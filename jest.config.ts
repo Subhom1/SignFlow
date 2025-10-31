@@ -8,16 +8,14 @@ const config: Config = {
     '^.+\\.(ts|tsx)$': [
       'ts-jest',
       {
-        tsconfig: {
-          jsx: 'react-jsx',
-        },
+        tsconfig: '<rootDir>/tsconfig.json',
       },
     ],
   },
 
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^@types/(.*)$': '<rootDir>/src/types/$1',
+    '^@types/(.*)$': '<rootDir>/types/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
 

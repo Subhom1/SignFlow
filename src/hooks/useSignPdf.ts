@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userNameState, pdfFileState } from '@/recoil/atoms';
-import { signPdf } from '../services.ts';
+import { signPdf } from '../services';
 
 interface UseSignPdfReturn {
   isLoading: boolean;
@@ -55,14 +55,14 @@ export const useSignPdf = (): UseSignPdfReturn => {
       // Complete the progress
       setProgress(100);
 
-      // Build full URL for the signed PDF
-      const baseUrl = import.meta.env.VITE_API_URL;
+      // Build full URL for the signed PDF - use environment variable safely
+      const baseUrl = process.env.VITE_API_URL || '';
 
       // Small delay to show 100% completion
       setTimeout(() => {
         setSignedPdfUrl(`${baseUrl}${response.url}`);
         setIsLoading(false);
-      }, 500);
+      }, 1000);
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : 'Failed to sign PDF. Please try again.';

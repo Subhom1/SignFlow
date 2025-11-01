@@ -3,7 +3,7 @@ import { pdfFileNameState } from '@/recoil/atoms';
 import { useState } from 'react';
 
 type Props = {
-  onFileSelected?: () => void;
+  onFileSelected?: (_file: File) => void;
 };
 
 export const FileUpload = ({ onFileSelected }: Props) => {

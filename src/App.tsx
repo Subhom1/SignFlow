@@ -1,10 +1,13 @@
+import { lazy, Suspense } from 'react';
 import './App.css';
-import Layout from './components/layout';
+import FallBackLoader from '@/components/common/FallBackLoader';
+const Layout = lazy(() => import('./components/layout'));
+
 function App() {
   return (
-    <>
+    <Suspense fallback={<FallBackLoader />}>
       <Layout />
-    </>
+    </Suspense>
   );
 }
 

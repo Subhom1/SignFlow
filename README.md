@@ -4,6 +4,8 @@
 
 SignFlow is a full-stack prototype that lets users upload PDFs, sign them digitally, and download the signed document—all through a clean, responsive interface. Built as a monorepo with a React + TypeScript frontend (powered by Vite) and a lightweight Express.js backend, it's designed to showcase solid architecture, thoughtful UX, and production-ready patterns.
 
+<img src="https://raw.githubusercontent.com/Subhom1/mygitsrc/refs/heads/master/src/mobile-screen.png" alt="mobile-light-preview">
+
 ---
 
 ## Architecture
